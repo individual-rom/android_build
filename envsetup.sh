@@ -495,7 +495,7 @@ function brunch()
 {
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka bacon
+        time mka bacon
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
@@ -789,7 +789,7 @@ function mm()
     local ARG=
     for ARG in $@ ; do
         if [ "$ARG" = mka ]; then
-            MM_MAKE=mka
+            MM_MAKE=time mka
         fi
     done
     # If we're sitting in the root of the build tree, just do a
@@ -858,7 +858,7 @@ function mmm()
                 MAKEFILE="$MAKEFILE $MFILE"
             else
                 case $DIR in
-                  mka) MMM_MAKE=mka;;
+                  mka) MMM_MAKE=time mka;;
                   showcommands | snod | dist | incrementaljavac) ARGS="$ARGS $DIR";;
                   GET-INSTALL-PATH) GET_INSTALL_PATH=$DIR;;
                   *) echo "No Android.mk in $DIR."; return 1;;
