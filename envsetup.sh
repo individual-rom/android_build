@@ -41,6 +41,13 @@ EOF
     echo $A
 }
 
+# check Linaro toolchain
+if [ "linaro" = "$1" ]; then
+    export linaro = 1
+else
+    export linaro = 0
+fi
+
 # Get the value of a build variable as an absolute path.
 function get_abs_build_var()
 {
@@ -167,20 +174,56 @@ function setpaths()
     fi
 
     unset ARM_EABI_TOOLCHAIN ARM_EABI_TOOLCHAIN_PATH
-    case $ARCH in
-        arm)
-            toolchaindir=arm/arm-eabi-$targetgccversion/bin
-            if [ -d "$gccprebuiltdir/$toolchaindir" ]; then
-                 export ARM_EABI_TOOLCHAIN="$gccprebuiltdir/$toolchaindir"
-                 ARM_EABI_TOOLCHAIN_PATH=":$gccprebuiltdir/$toolchaindir"
-            fi
-            ;;
-        mips) toolchaindir=mips/mips-eabi-4.4.3/bin
-            ;;
-        *)
-            # No need to set ARM_EABI_TOOLCHAIN for other ARCHs
-            ;;
-    esac
+    if [ ${linaro} = 0 ]; then
+        echo "Trying to export pure GCC directory"
+        case $ARCH in
+            arm)
+                toolchaindir=arm/arm-eabi-$targetgccversion/bin
+                if [ -d "$gccprebuiltdir/$toolchaindir" ]; then
+                     export ARM_EABI_TOOLCHAIN="$gccprebuiltdir/$toolchaindir"
+                     ARM_EABI_TOOLCHAIN_PATH=":$gccprebuiltdir/$toolchaindir"
+                fi
+                ;;
+            mips) toolchaindir=mips/mips-eabi-4.4.3/bin
+                ;;
+            *)
+                # No need to set ARM_EABI_TOOLCHAIN for other ARCHs
+                ;;
+        esac
+    elif [ ${linaro} = 1 ]; then
+        echo "Trying to export linaro directory"
+        case $ARCH in
+            arm)
+                toolchaindir=arm/linaro/bin
+                if [ -d "$gccprebuiltdir/$toolchaindir" ]; then
+                     export ARM_EABI_TOOLCHAIN="$gccprebuiltdir/$toolchaindir"
+                     ARM_EABI_TOOLCHAIN_PATH=":$gccprebuiltdir/$toolchaindir"
+                fi
+                ;;
+            mips) toolchaindir=mips/mips-eabi-4.4.3/bin
+                ;;
+            *)
+                # No need to set ARM_EABI_TOOLCHAIN for other ARCHs
+                ;;
+        esac
+    else
+        echo "linaro value is not set"
+        echo "Trying to export pure GCC directory"
+        case $ARCH in
+            arm)
+                toolchaindir=arm/arm-eabi-$targetgccversion/bin
+                if [ -d "$gccprebuiltdir/$toolchaindir" ]; then
+                     export ARM_EABI_TOOLCHAIN="$gccprebuiltdir/$toolchaindir"
+                     ARM_EABI_TOOLCHAIN_PATH=":$gccprebuiltdir/$toolchaindir"
+                fi
+                ;;
+            mips) toolchaindir=mips/mips-eabi-4.4.3/bin
+                ;;
+            *)
+                # No need to set ARM_EABI_TOOLCHAIN for other ARCHs
+                ;;
+        esac
+    fi
 
     export ANDROID_TOOLCHAIN=$ANDROID_EABI_TOOLCHAIN
     export ANDROID_QTOOLS=$T/development/emulator/qtools
