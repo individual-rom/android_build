@@ -43,9 +43,9 @@ EOF
 
 # check Linaro toolchain
 if [ "linaro" = "$1" ]; then
-    export linaro = 1
+    export linaro=1
 else
-    export linaro = 0
+    export linaro=0
 fi
 
 # Get the value of a build variable as an absolute path.
