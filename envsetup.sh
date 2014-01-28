@@ -43,9 +43,9 @@ EOF
 
 # check Linaro toolchain
 if [ "linaro" = "$1" ]; then
-    export linaro=1
+    echo "1" > $PWD/build/linaro
 else
-    export linaro=0
+    echo "0" > $PWD/build/linaro
 fi
 
 # Get the value of a build variable as an absolute path.
@@ -174,7 +174,8 @@ function setpaths()
     fi
 
     unset ARM_EABI_TOOLCHAIN ARM_EABI_TOOLCHAIN_PATH
-    if [ ${linaro} = 0 ]; then
+    local linaro=$(cat $PWD/build/linaro)
+    if [ "$linaro" = "0" ]; then
         echo "Trying to export pure GCC directory"
         case $ARCH in
             arm)
@@ -190,7 +191,7 @@ function setpaths()
                 # No need to set ARM_EABI_TOOLCHAIN for other ARCHs
                 ;;
         esac
-    elif [ ${linaro} = 1 ]; then
+    elif [ "$linaro" = "1" ]; then
         echo "Trying to export linaro directory"
         case $ARCH in
             arm)
