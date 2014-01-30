@@ -538,6 +538,8 @@ function print_lunch_menu()
 function brunch()
 {
     breakfast $*
+    echo "Elsa?"
+    echo "Do you want to build a snowman?"
     if [ $? -eq 0 ]; then
         time mka bacon
     else
