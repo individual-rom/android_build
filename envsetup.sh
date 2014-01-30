@@ -718,6 +718,43 @@ function tapas()
     printconfig
 }
 
+function frozen()
+{
+    echo "5-Year-Old Anna: Elsa? (knocks) 
+          Do you want to build a snowman?
+          Come on let's go and play
+          I never see you anymore
+          Come out the door, 
+          It's like you've gone away 
+          We used to be best buddies 
+          And now we're not 
+          I wish you would tell me why 
+          Do you want to build a snowman?
+          It doesn't have to be a Snowman 
+          8-Year-Old Elsa: Go away, Anna
+          5-Year-Old Anna: Okay, bye
+          9-Year-Old Anna: (knocks) Do you want to build a snowman
+          or ride our bike around the halls? 
+          I think some company is overdue
+          I've started talking to
+          The pictures on the walls
+          (Hang in there, Joan!) 
+          It gets a little lonely, 
+          All these empty rooms, 
+          Just watching the hours tick by
+          (tick-tock tick-tock tick-tock tick-tock)
+          15-Year-Old Anna: (knocks) Elsa? 
+          Please, I know you're in there, 
+          People are asking where you've been, 
+          They say have courage;
+          And I'm trying to, 
+          I'm right out here for you
+          Just let me in
+          We only have each other 
+          It's just you and me
+          What are we gonna do?
+          Do you want to build a snowman? (sniff)"
+}
 function eat()
 {
     if [ "$OUT" ] ; then
